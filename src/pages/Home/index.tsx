@@ -1,24 +1,14 @@
 import React from "react";
-import { Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Container, ContainerSafe, Title } from "./styles";
 
 const Home = (): React.JSX.Element => {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <Text>Hello World devProfile</Text>
-      </View>
-    </SafeAreaView>
+    <ContainerSafe>
+      <Container>
+        <Title>Hello World devProfile</Title>
+      </Container>
+    </ContainerSafe>
   );
 };
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    marginTop: Platform.OS === "android" ? 22 : 0,
-  },
-  container: {
-    flex: 1,
-  },
-});
 
 export default Home;
