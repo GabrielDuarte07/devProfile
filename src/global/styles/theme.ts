@@ -12,4 +12,8 @@ export default {
     grey500: "#a8a8b3",
     grey800: "#29292e",
   },
+  fonts: {
+    regular: "Roboto_400Regular",
+    bold: "Roboto_700Bold",
+  },
 };
