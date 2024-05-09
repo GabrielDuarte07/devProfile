@@ -3,9 +3,9 @@ import Home from "./src/pages/Home";
 import { ThemeProvider } from "styled-components/native";
 import AppTheme from "./src/global/styles/theme";
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
-import * as SplashScreen from "expo-splash-screen";
+import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync();
+preventAutoHideAsync();
 
 export default function App(): React.JSX.Element {
   const [fontsLoaded] = useFonts({
@@ -16,7 +16,7 @@ export default function App(): React.JSX.Element {
   useEffect(() => {
     async function prepare() {
       if (fontsLoaded) {
-        await SplashScreen.hideAsync();
+        await hideAsync();
       }
     }
     prepare();

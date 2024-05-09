@@ -2,11 +2,10 @@
   "compilerOptions": {
     "strict": true,
     "skipLibCheck": true,
-    "types": [
-      "@types/styled-components",
-      "@types/styled-components-react-native"
-    ],
-    "baseUrl": "./"
+    "types": [],
+    "rootDir": "./"
   },
+  "include": ["./App.tsx","./src/**/*"],
+  "exclude": ["node_modules","android","ios"],
   "extends": "expo/tsconfig.base",
 }

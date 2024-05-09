@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { DefaultTheme } from "styled-components/native";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export const ContainerSafe = styled.SafeAreaView`
   flex: 1;
@@ -7,13 +7,32 @@ export const ContainerSafe = styled.SafeAreaView`
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${(props: DefaultTheme) => props.theme.colors.dark};
-  justify-content: center;
-  align-items: center;
+  background-color: ${({ theme }) => theme.colors.dark};
 `;
 
-export const Title = styled.Text`
-  font-size: 24px;
-  font-family: ${(props: DefaultTheme) => props.theme.fonts.bold};
-  color: ${(props: DefaultTheme) => props.theme.colors.light};
+export const Header = styled.View`
+  width: 100%;
+  height: ${RFPercentage(17)}px;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding-top: ${RFValue(28)}px;
 `;
+
+export const UserWrapper = styled.View`
+  width: 100%;
+  padding: 0 ${RFValue(24)}px;
+`;
+
+export const UserInfo = styled.View``;
+
+export const UserAvatarButton = styled.TouchableOpacity``;
+
+export const UserAvatar = styled.Image``;
+
+export const UserInfoDetail = styled.View``;
+
+export const UserGreeting = styled.Text``;
+
+export const UserName = styled.Text``;
