@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import Home from "./src/pages/Home";
+// import Home from "./src/pages/Home";
+import Signin from "./src/pages/Signin";
 import { ThemeProvider } from "styled-components/native";
 import AppTheme from "./src/global/styles/theme";
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
@@ -26,7 +27,7 @@ export default function App(): React.JSX.Element {
 
   return (
     <ThemeProvider theme={AppTheme}>
-      <Home></Home>
+      <Signin></Signin>
     </ThemeProvider>
   );
 }
