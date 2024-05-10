@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 // import Home from "./src/pages/Home";
-import Signin from "./src/pages/Signin";
+//import Signin from "./src/pages/Signin";
 import { ThemeProvider } from "styled-components/native";
 import AppTheme from "./src/global/styles/theme";
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
+import Signup from "./src/pages/Signup";
 
 preventAutoHideAsync();
 
@@ -27,7 +28,7 @@ export default function App(): React.JSX.Element {
 
   return (
     <ThemeProvider theme={AppTheme}>
-      <Signin></Signin>
+      <Signup></Signup>
     </ThemeProvider>
   );
 }

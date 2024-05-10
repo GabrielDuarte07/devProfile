@@ -4,19 +4,20 @@ import InputText from "../../components/form/InputText";
 import { ScrollView } from "react-native";
 import Button from "../../components/form/Button";
 
-const Signin = (): React.JSX.Element => {
+const Signup = (): React.JSX.Element => {
   return (
     <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flex: 1 }}>
       <Container>
         <Content>
-          <Title>Faça seu logon</Title>
+          <Title>Crie sua Conta</Title>
+          <InputText placeholder="Nome Completo" />
           <InputText placeholder="Email" />
           <InputText placeholder="Senha" />
-          <Button text="Entrar" />
+          <Button text="Criar conta" />
         </Content>
       </Container>
     </ScrollView>
   );
 };
 
-export default Signin;
+export default Signup;
