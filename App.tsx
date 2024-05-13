@@ -5,7 +5,8 @@ import { ThemeProvider } from "styled-components/native";
 import AppTheme from "./src/global/styles/theme";
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
-import Signup from "./src/pages/Signup";
+import { NavigationContainer } from "@react-navigation/native";
+import Routes from "./src/Routes/index.routes";
 
 preventAutoHideAsync();
 
@@ -27,8 +28,10 @@ export default function App(): React.JSX.Element {
   if (!fontsLoaded) return <></>;
 
   return (
-    <ThemeProvider theme={AppTheme}>
-      <Signup></Signup>
-    </ThemeProvider>
+    <NavigationContainer>
+      <ThemeProvider theme={AppTheme}>
+        <Routes />
+      </ThemeProvider>
+    </NavigationContainer>
   );
 }
