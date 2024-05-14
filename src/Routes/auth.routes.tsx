@@ -7,9 +7,9 @@ const Stack = createNativeStackNavigator();
 
 const AuthRoutes = (): React.JSX.Element => {
   return (
-    <Stack.Navigator initialRouteName="Singin" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Singin" component={Signin}></Stack.Screen>
-      <Stack.Screen name="Singup" component={Signup}></Stack.Screen>
+    <Stack.Navigator initialRouteName="Signin" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Signin" component={Signin}></Stack.Screen>
+      <Stack.Screen name="Signup" component={Signup}></Stack.Screen>
     </Stack.Navigator>
   );
 };
