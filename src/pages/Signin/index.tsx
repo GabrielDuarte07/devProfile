@@ -16,21 +16,34 @@ import Button from "../../components/form/Button";
 import ImgLogo from "../../../assets/logo.png";
 import { useNavigation } from "@react-navigation/native";
 import {} from "@expo/vector-icons";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type NavigationProps = {
   navigate: (screen: string) => void;
 };
 
-interface IFormFields extends FieldValues {
+interface IFormFields {
   email?: string;
   password?: string;
 }
 
+const formSchema = yup.object({
+  email: yup.string().email("Email invalido").required("Email obrigatorio"),
+  password: yup.string().required("senha obrigatoria"),
+});
+
 const Signin = (): React.JSX.Element => {
   const { navigate } = useNavigation<NavigationProps>();
 
-  const { handleSubmit, control } = useForm<IFormFields>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<IFormFields>({
+    resolver: yupResolver<IFormFields>(formSchema),
+  });
 
   const handleSignIn = ({ email, password }: IFormFields): void => {
     console.log(email, password);
@@ -53,6 +66,7 @@ const Signin = (): React.JSX.Element => {
               keyboardType="email-address"
               autoCorrect={false}
               autoCapitalize="none"
+              error={errors.email && errors.email.message}
             />
             <InputControl
               placeholder="Senha"
@@ -60,6 +74,7 @@ const Signin = (): React.JSX.Element => {
               control={control}
               autoCorrect={false}
               secureTextEntry
+              error={errors.password && errors.password.message}
             />
             <Button text="Entrar" onPress={handleSubmit(handleSignIn)} />
             <ForgotPasswordButton>

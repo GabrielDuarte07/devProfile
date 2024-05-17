@@ -13,20 +13,34 @@ import { ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import Button from "../../components/form/Button";
 import ImgLogo from "../../../assets/logo.png";
 import { useNavigation } from "@react-navigation/native";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type NavigationProps = {
   goBack: () => void;
 };
 
-interface IFormFields extends FieldValues {
+interface IFormFields {
   name?: string;
   email?: string;
   password?: string;
 }
 
+const formSchema = yup.object({
+  name: yup.string().required("Nome obrigatório"),
+  email: yup.string().email("E-mail invalido").required("E-mail obrigatório"),
+  password: yup.string().required("Senha obrigatória"),
+});
+
 const Signup = (): React.JSX.Element => {
-  const { control, handleSubmit } = useForm<IFormFields>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormFields>({
+    resolver: yupResolver<IFormFields>(formSchema),
+  });
   const { goBack } = useNavigation<NavigationProps>();
 
   const handleSignUp = ({ name, email, password }: IFormFields): void => {
@@ -43,9 +57,24 @@ const Signup = (): React.JSX.Element => {
           <Content>
             <Logo source={ImgLogo} />
             <Title>Crie sua Conta</Title>
-            <InputControl placeholder="Nome Completo" name="name" control={control} />
-            <InputControl placeholder="Email" name="email" control={control} />
-            <InputControl placeholder="Senha" name="password" control={control} />
+            <InputControl
+              placeholder="Nome Completo"
+              name="name"
+              control={control}
+              error={errors.name && errors.name.message}
+            />
+            <InputControl
+              placeholder="Email"
+              name="email"
+              control={control}
+              error={errors.email && errors.email.message}
+            />
+            <InputControl
+              placeholder="Senha"
+              name="password"
+              control={control}
+              error={errors.password && errors.password.message}
+            />
             <Button text="Criar conta" onPress={handleSubmit(handleSignUp)} />
           </Content>
         </Container>
