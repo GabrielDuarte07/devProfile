@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Header,
@@ -11,26 +11,50 @@ import {
   UserName,
   Icon,
 } from "./styles";
+import { Config } from "../../global/env/env";
 
 import Avatar02 from "../../../assets/avatar02.png";
+import { authContext } from "../../contexts/AuthContext";
+import { Alert } from "react-native";
 
 const Home = (): React.JSX.Element => {
+  const { user, signOut } = useContext(authContext);
+
+  const handleSignOut = () => {
+    Alert.alert("Logout", "Tem certeza que deseja sair do app?", [
+      {
+        text: "cancelar",
+        onPress: () => {},
+      },
+      {
+        text: "Logout",
+        onPress: signOut,
+      },
+    ]);
+  };
+
   return (
     <Container>
       <Header>
         <UserWrapper>
           <UserInfo>
             <UserAvatarButton onPress={() => {}}>
-              <UserAvatar source={Avatar02} />
+              <UserAvatar
+                source={
+                  user.avatar_url
+                    ? { uri: Config.API_AVATARS + user.avatar_url }
+                    : Avatar02
+                }
+              />
             </UserAvatarButton>
 
             <UserInfoDetail>
               <UserGreeting>Olá</UserGreeting>
-              <UserName>Mario</UserName>
+              <UserName>{user.name}</UserName>
             </UserInfoDetail>
           </UserInfo>
 
-          <Icon name="power" />
+          <Icon name="power" onPress={handleSignOut} />
         </UserWrapper>
       </Header>
     </Container>

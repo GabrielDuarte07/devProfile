@@ -1,19 +1,32 @@
-import React, { ReactNode, createContext } from "react";
+import React, { ReactNode, createContext, useState, useEffect } from "react";
 import { Alert } from "react-native";
 import api from "../services/api/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IUser } from "../interfaces/IUser";
 
-interface IPropsContext {
-  name: string;
+interface PropsContext {
+  user: IUser;
   signIn(email: string, password: string): Promise<void>;
+  signOut(): Promise<void>;
 }
 
-interface IPropsContextProvider {
+interface PropsContextProvider {
   children: ReactNode;
 }
 
-export const authContext = createContext<IPropsContext>({} as IPropsContext);
+interface PropsStateContext {
+  token: string;
+  user: IUser;
+}
 
-const AuthContextProvider = ({ children }: IPropsContextProvider): React.JSX.Element => {
+export const authContext = createContext<PropsContext>({} as PropsContext);
+
+const tokenKey = "@DevProfile:token";
+const userKey = "@DevProfile:user";
+
+const AuthContextProvider = ({ children }: PropsContextProvider): React.JSX.Element => {
+  const [data, setData] = useState<PropsStateContext>({} as PropsStateContext);
+
   const signIn = async (email: string, password: string): Promise<void> => {
     try {
       const response = await api.post("auth", { email, password });
@@ -22,14 +35,44 @@ const AuthContextProvider = ({ children }: IPropsContextProvider): React.JSX.Ele
         Alert.alert("Erro de login", data.error);
         return;
       }
-      Alert.alert("sucesso", "login valido");
+
+      const user = {
+        id: Number(data.user.id),
+        name: data.user.name,
+        email: data.user.email,
+        avatar_url: data.user.avatar,
+      };
+
+      await AsyncStorage.setItem(tokenKey, data.token);
+      await AsyncStorage.setItem(userKey, JSON.stringify(user));
+      setData({ token: data.token, user });
     } catch (error) {
       console.log(error);
       Alert.alert("Erro", "Erro no app, contate o suporte");
     }
   };
+
+  const signOut = async () => {
+    await AsyncStorage.removeItem(tokenKey);
+    await AsyncStorage.removeItem(userKey);
+    setData({} as PropsStateContext);
+  };
+
+  useEffect(() => {
+    async function checkUserLogged() {
+      const token = await AsyncStorage.getItem(tokenKey);
+      const user = await AsyncStorage.getItem(userKey);
+
+      if (token && user) {
+        setData({ token, user: JSON.parse(user) });
+      }
+    }
+
+    checkUserLogged();
+  }, []);
+
   return (
-    <authContext.Provider value={{ name: "Dunha", signIn }}>
+    <authContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </authContext.Provider>
   );

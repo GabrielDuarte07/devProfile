@@ -1,7 +1,8 @@
 import axios from "axios";
+import { Config } from "../../global/env/env";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.26:3030/",
+  baseURL: Config.API_HOST,
   validateStatus: status => status < 500,
 });
 

@@ -21,9 +21,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { authContext } from "../../contexts/AuthContext";
 
-type NavigationProps = {
-  navigate: (screen: string) => void;
-};
+interface NavigationProps {
+  navigate(screen: string): void;
+}
 
 interface IFormFields {
   email?: string;
@@ -87,7 +87,7 @@ const Signin = (): React.JSX.Element => {
               onPress={handleSubmit(handleSignIn)}
               disabled={loading}
             />
-            <ForgotPasswordButton>
+            <ForgotPasswordButton onPress={() => navigate("ForgottenPassword")}>
               <ForgotPasswordTitle>Esqueci minha Senha</ForgotPasswordTitle>
             </ForgotPasswordButton>
           </Content>
