@@ -7,6 +7,7 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import Routes from "./src/Routes/index.routes";
+import AuthContextProvider from "./src/contexts/AuthContext";
 
 preventAutoHideAsync();
 
@@ -30,7 +31,9 @@ export default function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <ThemeProvider theme={AppTheme}>
-        <Routes />
+        <AuthContextProvider>
+          <Routes />
+        </AuthContextProvider>
       </ThemeProvider>
     </NavigationContainer>
   );

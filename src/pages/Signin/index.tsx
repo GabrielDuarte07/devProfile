@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Content,
@@ -19,6 +19,7 @@ import {} from "@expo/vector-icons";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { authContext } from "../../contexts/AuthContext";
 
 type NavigationProps = {
   navigate: (screen: string) => void;
@@ -35,6 +36,8 @@ const formSchema = yup.object({
 });
 
 const Signin = (): React.JSX.Element => {
+  const auth = useContext(authContext);
+  console.log(auth);
   const { navigate } = useNavigation<NavigationProps>();
 
   const {

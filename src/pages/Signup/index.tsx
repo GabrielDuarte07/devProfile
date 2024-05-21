@@ -9,13 +9,14 @@ import {
   Icon,
 } from "./styles";
 import InputControl from "../../components/form/InputControl";
-import { ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { ScrollView, KeyboardAvoidingView, Platform, Alert } from "react-native";
 import Button from "../../components/form/Button";
 import ImgLogo from "../../../assets/logo.png";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import api from "../../services/api/api";
 
 type NavigationProps = {
   goBack: () => void;
@@ -43,8 +44,21 @@ const Signup = (): React.JSX.Element => {
   });
   const { goBack } = useNavigation<NavigationProps>();
 
-  const handleSignUp = ({ name, email, password }: IFormFields): void => {
-    console.log(name, email, password);
+  const handleSignUp = async ({ name, email, password }: IFormFields): Promise<void> => {
+    const data = {
+      name,
+      email,
+      password,
+    };
+    try {
+      await api.post("users", data);
+      Alert.alert("sucesso", "ok");
+    } catch (e) {
+      Alert.alert(
+        "Erro ao cadastrar",
+        "Houve um erro ao realiazar o cadastro, tente novamente",
+      );
+    }
   };
 
   return (
@@ -74,6 +88,7 @@ const Signup = (): React.JSX.Element => {
               name="password"
               control={control}
               error={errors.password && errors.password.message}
+              secureTextEntry
             />
             <Button text="Criar conta" onPress={handleSubmit(handleSignUp)} />
           </Content>
