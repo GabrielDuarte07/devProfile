@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Container,
   Content,
@@ -36,8 +36,10 @@ const formSchema = yup.object({
 });
 
 const Signin = (): React.JSX.Element => {
-  const auth = useContext(authContext);
-  console.log(auth);
+  const { signIn } = useContext(authContext);
+
+  const [loading, setLoading] = useState(false);
+
   const { navigate } = useNavigation<NavigationProps>();
 
   const {
@@ -49,7 +51,8 @@ const Signin = (): React.JSX.Element => {
   });
 
   const handleSignIn = ({ email, password }: IFormFields): void => {
-    console.log(email, password);
+    setLoading(true);
+    signIn(String(email), String(password)).finally(() => setLoading(false));
   };
 
   return (
@@ -79,7 +82,11 @@ const Signin = (): React.JSX.Element => {
               secureTextEntry
               error={errors.password && errors.password.message}
             />
-            <Button text="Entrar" onPress={handleSubmit(handleSignIn)} />
+            <Button
+              text="Entrar"
+              onPress={handleSubmit(handleSignIn)}
+              disabled={loading}
+            />
             <ForgotPasswordButton>
               <ForgotPasswordTitle>Esqueci minha Senha</ForgotPasswordTitle>
             </ForgotPasswordButton>
