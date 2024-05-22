@@ -8,6 +8,7 @@ import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import Routes from "./src/Routes/index.routes";
 import AuthContextProvider from "./src/contexts/AuthContext";
+import { StatusBar } from "react-native";
 
 preventAutoHideAsync();
 
@@ -30,6 +31,7 @@ export default function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor="transparent" translucent />
       <ThemeProvider theme={AppTheme}>
         <AuthContextProvider>
           <Routes />

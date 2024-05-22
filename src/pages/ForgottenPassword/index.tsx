@@ -20,6 +20,7 @@ import api from "../../services/api/api";
 
 type NavigationProps = {
   goBack: () => void;
+  navigate: (screen: string) => void;
 };
 
 interface IFormFields {
@@ -39,7 +40,7 @@ const ForgottenPassword = (): React.JSX.Element => {
   } = useForm<IFormFields>({
     resolver: yupResolver<IFormFields>(formSchema),
   });
-  const { goBack } = useNavigation<NavigationProps>();
+  const { goBack, navigate } = useNavigation<NavigationProps>();
 
   const handleForgottenPassword = async ({ email }: IFormFields): Promise<void> => {
     setLoading(true);
@@ -49,7 +50,7 @@ const ForgottenPassword = (): React.JSX.Element => {
     try {
       await api.post("password/forgotten", data);
       Alert.alert("E-mail enviado", "E-mail de mudança de senha enviado com sucesso");
-      goBack();
+      navigate("ResetPassword");
     } catch (e) {
       Alert.alert("Erro ao registrar", "Houve um erro ao mandar e-mail para nova senha");
     } finally {
